@@ -139,19 +139,25 @@ class _EditView extends StatelessWidget {
             left: editPhotoDocumentStyle.left,
             right: editPhotoDocumentStyle.right,
             bottom: editPhotoDocumentStyle.bottom,
-            child: BlocSelector<EditBloc, EditState, Uint8List?>(
-              selector: (state) => state.image,
-              builder: (context, image) {
-                if (image == null) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
+            child: SafeArea(
+              bottom: false,
+              child: BlocSelector<EditBloc, EditState, Uint8List?>(
+                selector: (state) => state.image,
+                builder: (context, image) {
+                  if (image == null) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-                return Image.memory(
-                  image,
-                );
-              },
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(20, 70, 20, 180),
+                    child: Image.memory(
+                      image,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
 
